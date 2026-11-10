@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Central de resoluções de questões sobre grandezas e proporcionalidade - Matemática Objetiva.">
+<title>Central de Resoluções | Matemática Objetiva</title>
+<style>
+:root{--navy:#173b67;--blue:#245b91;--pale:#eaf2fb;--ink:#172536;--muted:#64748b;--line:#dbe3ec;--green:#18794e;--red:#b93832;--bg:#f4f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Arial,Helvetica,sans-serif}
+header{background:linear-gradient(125deg,#102d50,#245b91);color:white;padding:30px 18px}
+.head{max-width:920px;margin:auto}.brand{font-size:.83rem;font-weight:700;letter-spacing:.12em;opacity:.9}.hero{display:flex;align-items:center;gap:18px}.hero h1{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.12;margin:12px 0 8px}.hero p{margin:0;color:#dce9f7}.hero-icon{font-size:3.4rem;flex-shrink:0}
+main{max-width:920px;margin:26px auto;padding:0 16px 48px}.intro{background:white;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:18px}.intro p{margin:5px 0;color:#405168}
+.progress-card{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:18px 2px 10px}.progress-card strong{font-size:1.1rem}.score{font-weight:700;color:var(--navy)}.track{height:9px;background:#e1e8f0;border-radius:99px;overflow:hidden;margin-bottom:22px}.fill{height:100%;width:0;background:#25845c;transition:width .25s}
+.question{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 3px 12px #193b6010}.qtop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.eyebrow{font-size:.78rem;color:var(--muted);font-weight:700;letter-spacing:.04em}.tag{font-size:.75rem;border-radius:99px;padding:4px 10px;background:var(--pale);color:var(--navy);font-weight:700}.question h2{font-size:1.15rem;margin:7px 0 12px}.prompt{white-space:pre-line;margin:0 0 16px}
+.options{display:grid;gap:9px}.option{width:100%;display:flex;align-items:flex-start;gap:11px;text-align:left;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font:inherit;cursor:pointer;transition:.15s}.option:hover:not(:disabled){border-color:var(--blue);background:#f5f9ff}.letter{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#edf2f7;font-weight:700;flex-shrink:0}.option:disabled{cursor:default;opacity:1}.option.correct{border:2px solid var(--green);background:#edf8f1}.option.wrong{border:2px solid var(--red);background:#fff1f0}.option.correct .letter{background:var(--green);color:white}.option.wrong .letter{background:var(--red);color:white}
+.feedback{margin-top:15px;padding:15px;border-radius:12px;background:#f2f6fa}.feedback.good{border-left:4px solid var(--green)}.feedback.bad{border-left:4px solid var(--red)}.feedback h3{margin:0 0 7px;font-size:1rem}.feedback p{margin:7px 0}.solution{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}.solution ol{padding-left:22px}.solution li{margin:8px 0}.concept{background:white;border-radius:9px;padding:11px;margin-top:12px}.btn{border:1px solid #b8c8d9;background:white;color:var(--navy);font-weight:700;padding:10px 14px;border-radius:9px;cursor:pointer}.btn:hover{background:#eef5fc}.result{background:#eaf2fb;border-radius:15px;padding:18px;margin-top:22px}.result h2{margin:0 0 6px}.result strong{font-size:1.5rem;color:var(--navy)}footer{text-align:center;color:var(--muted);font-size:.82rem;padding:24px 10px}
+@media(max-width:560px){header{padding:24px 16px}.hero-icon{font-size:2.5rem}.question{padding:16px}.intro{padding:16px}}
+</style>
+</head>
+<body>
+<header><div class="head">
+ <div class="brand">MATEMÁTICA OBJETIVA</div>
+ <div class="hero"><div><h1>Central de Resoluções</h1><p>Grandezas e proporcionalidade · Questões comentadas</p></div><div class="hero-icon" aria-hidden="true">📐</div></div>
+</div></header>
+<main>
+<section class="intro">
+ <strong>Aprenda, pratique e compreenda.</strong>
+ <p>Escolha uma alternativa em cada questão. Depois da resposta, confira se acertou e abra a resolução comentada para acompanhar o raciocínio matemático passo a passo.</p>
+</section>
+<div class="progress-card"><strong>Seu desempenho</strong><span class="score" id="score">0/5 acertos</span></div>
+<div class="track"><div class="fill" id="progress"></div></div>
+<div id="quiz"></div>
+<section class="result" id="result" hidden>
+ <h2>Resultado final</h2><strong id="finalScore">0/5</strong>
+ <p id="finalMessage">Responda às cinco questões para concluir o desafio.</p>
+ <button class="btn" id="restart">↻ Reiniciar atividade</button>
+</section>
+</main>
+<footer>MATEMÁTICA OBJETIVA · Educação Matemática</footer>
+<script>
+const questions = [
+{
+exam:"ENEM 2024 PPL",number:"147",level:"Intermediário",
+prompt:"Um engenheiro civil organizou duas equipes de pedreiros para construir um muro. Todos apresentam o mesmo rendimento por hora. A equipe I tinha 3 pedreiros, que construíram 36 m² em 2 dias, trabalhando 6 horas por dia. A equipe II tinha 5 pedreiros, que trabalharam 8 horas por dia, durante 6 dias. Quantos metros quadrados a equipe II construiu a mais do que a equipe I?",
+options:["144 m²","180 m²","204 m²","240 m²","276 m²"],correct:2,
+intro:"A produção depende do total de horas de trabalho coletivo: número de pedreiros × dias × horas por dia. Como o rendimento por hora é igual para todos, podemos comparar esse total.",
+steps:["Equipe I: 3 × 2 × 6 = 36 horas de trabalho coletivo.","A equipe I produziu 36 m² em 36 horas coletivas. Portanto, o rendimento é 36 ÷ 36 = 1 m² por hora coletiva.","Equipe II: 5 × 6 × 8 = 240 horas de trabalho coletivo.","Produção da equipe II: 240 × 1 = 240 m².","Diferença entre as produções: 240 − 36 = 204 m²."],
+conclusion:"A equipe II construiu 204 m² a mais. Alternativa C.",
+concept:"Proporcionalidade composta: mantendo o rendimento, a produção aumenta quando aumentam o número de trabalhadores e as horas trabalhadas."
+},
+{
+exam:"ENEM 2024 PPL",number:"148",level:"Intermediário",
+prompt:"Na primeira edição de uma Feira do Livro, dez voluntários, com a mesma habilidade e experiência, montaram cinco estandes em uma semana, trabalhando todos os dias. Na segunda edição, a organização dispõe de duas semanas. Considere duas situações: I – o número de voluntários permanece o mesmo; II – o número de estandes permanece o mesmo. O número de estandes na situação I e o número de voluntários na situação II, comparados aos números da primeira edição, serão, respectivamente:",
+options:["Maior e maior.","Maior e menor.","Igual e igual.","Igual e menor.","Menor e menor."],correct:1,
+intro:"O tempo disponível dobrou, mantendo a produtividade e a quantidade de dias trabalhados por semana.",
+steps:["Situação I: os dez voluntários permanecem e o tempo dobra. Com o dobro do tempo, podem montar o dobro de estandes: 5 × 2 = 10.","Assim, o número de estandes será maior que na primeira edição.","Situação II: a quantidade de estandes permanece em cinco, mas o tempo dobra.","Para realizar a mesma produção em dobro do tempo, é necessário metade dos voluntários: 10 ÷ 2 = 5.","Logo, o número de voluntários será menor."],
+conclusion:"Na situação I, o número de estandes aumenta; na situação II, o número de voluntários diminui. Alternativa B.",
+concept:"A produção é diretamente proporcional ao tempo e ao número de voluntários, quando as demais condições são mantidas."
+},
+{
+exam:"ENEM 2025",number:"176",level:"Fácil",
+prompt:"Uma final de futebol foi disputada em dois tempos de 45 minutos e uma prorrogação de 30 minutos. Um jogador entrou no início do segundo tempo. Ao final dos 45 minutos, havia percorrido 4,5 km. Ele manteve na prorrogação a mesma velocidade média. Qual foi a distância total percorrida pelo jogador durante sua participação na partida?",
+options:["4,5 km","6,0 km","7,5 km","9,0 km","12,0 km"],correct:2,
+intro:"A velocidade média permanece constante. Portanto, a distância percorrida é diretamente proporcional ao tempo de deslocamento.",
+steps:["Em 45 minutos, o jogador percorreu 4,5 km.","Na prorrogação de 30 minutos, a distância é proporcional: x/4,5 = 30/45.","Multiplicando em cruz: 45x = 135.","Logo, x = 3 km durante a prorrogação.","Distância total: 4,5 + 3 = 7,5 km."],
+conclusion:"O jogador percorreu 7,5 km durante toda a sua participação. Alternativa C.",
+concept:"Grandezas diretamente proporcionais: mantendo a velocidade constante, quanto maior o tempo, maior a distância percorrida."
+},
+{
+exam:"ENEM 2023 PPL",number:"150",level:"Intermediário",
+prompt:"Em um ateliê de costura, para confeccionar 200 calças jeans em 5 dias de trabalho, são necessários 10 funcionários. Devido a uma crise financeira, a gerência decidiu demitir quatro funcionários. A produção deverá ser mantida com o novo quadro de funcionários. Em quantos dias os funcionários restantes confeccionarão a mesma quantidade de calças?",
+options:["2,0 dias","3,0 dias","3,3 dias","8,3 dias","12,0 dias"],correct:3,
+intro:"A quantidade de calças e a produtividade permanecem constantes. Quando o número de funcionários diminui, o tempo necessário para produzir a mesma quantidade aumenta. Essas grandezas são inversamente proporcionais.",
+steps:["Número inicial de funcionários: 10. Tempo: 5 dias.","Após a demissão, restam 10 − 4 = 6 funcionários.","Como a produção é a mesma, aplicamos a relação inversa: 10 × 5 = 6 × x.","50 = 6x.","x = 50/6 = 8,333... dias, aproximadamente 8,3 dias."],
+conclusion:"O novo grupo precisará de aproximadamente 8,3 dias. Alternativa D.",
+concept:"Grandezas inversamente proporcionais: mantendo a produção, reduzir o número de funcionários aumenta o tempo de trabalho."
+},
+{
+exam:"FUVEST 2025",number:"16",level:"Média",
+prompt:"A inclinação i de uma rampa, em porcentagem, é calculada dividindo a altura h do desnível pela projeção horizontal c e multiplicando por 100. Uma rampa possui dois segmentos: o primeiro tem projeção horizontal de 10 m e inclinação de 6%; o segundo tem projeção horizontal de 7 m e desnível de 0,5 m. A tabela da norma estabelece que, para desnível de até 0,8 m, a inclinação admissível deve ser maior que 6,25% e menor ou igual a 8,33%. O que é correto afirmar?",
+options:["A rampa não está adequada, pois os dois segmentos estão fora da norma.","A rampa está adequada, pois os dois segmentos estão dentro da norma.","A rampa não está adequada, pois o primeiro segmento está fora da norma.","A rampa não está adequada, pois o segundo segmento está fora da norma.","A rampa está adequada, pois somente o segundo segmento está fora da norma."],correct:2,
+intro:"É necessário calcular o desnível do primeiro segmento e a inclinação do segundo, comparando os resultados com os limites apresentados no enunciado.",
+steps:["Primeiro segmento: a inclinação é 6%. Pela fórmula, 6 = (h/10) × 100. Assim, h = 0,6 m.","Como 0 < 0,6 ≤ 0,8, aplica-se o intervalo de inclinação maior que 6,25% e menor ou igual a 8,33%.","A inclinação do primeiro segmento é 6%, abaixo do mínimo de 6,25%. Portanto, está inadequado.","Segundo segmento: i = (0,5/7) × 100 ≈ 7,14%.","Como o desnível é 0,5 m, a inclinação de aproximadamente 7,14% está dentro do intervalo permitido."],
+conclusion:"O primeiro segmento não atende à norma, enquanto o segundo está adequado. Alternativa C.",
+concept:"Razão e porcentagem: a inclinação é a razão entre o desnível vertical e a projeção horizontal, multiplicada por 100."
+}
+];
+const letters=["A","B","C","D","E"];
+const state={answers:{},open:{}};
+const quiz=document.getElementById("quiz");
+function render(){
+ quiz.innerHTML="";
+ questions.forEach((q,i)=>{
+  const chosen=state.answers[i], correct=chosen===q.correct;
+  const card=document.createElement("article");card.className="question";
+  const top=document.createElement("div");top.className="qtop";
+  top.innerHTML=`<span class="eyebrow">${q.exam} · QUESTÃO ${q.number}</span><span class="tag">${q.level}</span>`;
+  card.append(top);
+  const title=document.createElement("h2");title.textContent=`Questão ${String(i+1).padStart(2,"0")}`;card.append(title);
+  const prompt=document.createElement("p");prompt.className="prompt";prompt.textContent=q.prompt;card.append(prompt);
+  const label=document.createElement("p");label.innerHTML="<strong>Selecione uma alternativa:</strong>";card.append(label);
+  const opts=document.createElement("div");opts.className="options";
+  q.options.forEach((opt,j)=>{
+   const b=document.createElement("button");b.className="option";b.type="button";b.disabled=chosen!==undefined;
+   if(chosen!==undefined&&j===q.correct)b.classList.add("correct");
+   if(chosen===j&&j!==q.correct)b.classList.add("wrong");
+   b.innerHTML=`<span class="letter">${letters[j]}</span><span></span>`;b.querySelector("span:last-child").textContent=opt;
+   b.addEventListener("click",()=>{state.answers[i]=j;render()});opts.append(b);
+  });card.append(opts);
+  if(chosen!==undefined){
+   const feedback=document.createElement("section");feedback.className="feedback "+(correct?"good":"bad");
+   const h=document.createElement("h3");h.textContent=correct?"✓ Muito bem! Você acertou.":"✕ Não foi dessa vez!";feedback.append(h);
+   const p=document.createElement("p");p.textContent=`Alternativa correta: ${letters[q.correct]}.`;feedback.append(p);
+   const toggle=document.createElement("button");toggle.className="btn";toggle.type="button";toggle.textContent=state.open[i]?"Ocultar resolução":"Ver resolução comentada";
+   toggle.addEventListener("click",()=>{state.open[i]=!state.open[i];render()});feedback.append(toggle);
+   if(state.open[i]){
+    const sol=document.createElement("div");sol.className="solution";
+    const intro=document.createElement("p");intro.textContent=q.intro;sol.append(intro);
+    const st=document.createElement("strong");st.textContent="Desenvolvimento:";sol.append(st);
+    const ol=document.createElement("ol");q.steps.forEach(s=>{const li=document.createElement("li");li.textContent=s;ol.append(li)});sol.append(ol);
+    const conclusion=document.createElement("p");conclusion.innerHTML="<strong>Conclusão:</strong> ";conclusion.append(document.createTextNode(q.conclusion));sol.append(conclusion);
+    const concept=document.createElement("div");concept.className="concept";const cp=document.createElement("p");cp.innerHTML="<strong>Conceito matemático</strong>";const ct=document.createElement("p");ct.textContent=q.concept;concept.append(cp,ct);sol.append(concept);
+    feedback.append(sol);
+   }
+   card.append(feedback);
+  }
+  quiz.append(card);
+ });
+ updateProgress();
+}
+function updateProgress(){
+ const done=Object.keys(state.answers).length,score=Object.entries(state.answers).filter(([i,a])=>questions[+i].correct===a).length;
+ document.getElementById("score").textContent=`${score}/5 acertos`;
+ document.getElementById("progress").style.width=`${done/5*100}%`;
+ const result=document.getElementById("result");result.hidden=done!==5;
+ if(done===5){
+  document.getElementById("finalScore").textContent=`${score}/5`;
+  document.getElementById("finalMessage").textContent=score===5?"Excelente! Você demonstrou domínio das questões propostas.":score>=3?"Bom trabalho! Revise os comentários das questões que errou.":"Continue estudando! Consulte as resoluções e tente novamente.";
+ }
+}
+document.getElementById("restart").addEventListener("click",()=>{state.answers={};state.open={};render();window.scrollTo({top:0,behavior:"smooth"})});
+render();
+</script>
+</body>
+</html>
